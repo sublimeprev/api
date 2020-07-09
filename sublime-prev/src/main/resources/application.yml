@@ -12,3 +12,7 @@ spring:
     hibernate.ddl-auto: create
     show-sql: true
     generate-ddl: true
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      org.hibernate.envers.audit_table_prefix: AUD_
+      org.hibernate.envers.audit_table_suffix: null
