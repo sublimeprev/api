@@ -50,7 +50,7 @@ public class MotherService {
         return this.repository.findAll();
     }
 
-    public List<Mother> findAllMotherIsDeletedFalse(){
-        return this.repository.findAllIsDeletedFalse();
-    }
+//    public List<Mother> findAllMotherIsDeletedFalse(){
+//        return this.repository.findAllIsDeletedFalse();
+//    }
 }
