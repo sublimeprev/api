@@ -1,7 +1,6 @@
 package com.sublimeprev.api.dto.req;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
@@ -28,10 +27,8 @@ public class UserReqDTO {
 	@NotNull
 	private LocalDate birthdate;
 	private Set<Role> roles;
-	private LocalDate schedulingsEndDate;
 	private String newPassword;
 	private String encryptedPassword;
-	private List<Long> typeExercise;
 	private String comments;
 	
 	public User toEntity(User entity) {
@@ -42,7 +39,6 @@ public class UserReqDTO {
 		entity.setPhone(this.phone);
 		entity.setBirthdate(this.birthdate);
 		entity.setRoles(this.roles);
-		entity.setSchedulingsEndDate(this.schedulingsEndDate);
 		entity.setNewPassword(this.newPassword);
 		if(this.encryptedPassword != null) {
 			entity.setEncryptedPassword(this.encryptedPassword);

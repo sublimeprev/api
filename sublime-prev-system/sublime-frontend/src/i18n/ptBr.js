@@ -15,19 +15,22 @@ ptbrMessages.enums = {
   roles: {
     ADMIN: 'Admin',
   },
-  dayOfWeek: {
-    MONDAY: 'Segunda-Feira',
-    TUESDAY: 'Terça-Feira',
-    WEDNESDAY: 'Quarta-Feira',
-    THURSDAY: 'Quinta-Feira',
-    FRIDAY: 'Sexta-Feira',
-    SATURDAY: 'Sábado',
-    SUNDAY: 'Domingo',
+
+  maritalStatus: {
+    SOLTEIRO: 'Solteira',
+    CASADO: 'Casada',
+    DICORCIADO: 'Divorciada',
+    VIUVO: 'Viúva'
   },
-  schedulingStatus: {
-    CANCELADO: 'Cancelado',
-    MARCADO: 'Marcado',
-  }
+
+schooling: {
+  FUNDAMENTAL_INCOMPLETO: 'Fundamental Icompleto',
+  FUNDAMENTAL_COMPLETO: 'Fundamental Completo',
+  MEDIO_INCOMPLETO: 'Médio Incompleto',
+  MEDIO_COMPLETO: 'Médio Completo',
+  SUPERIOR_INCOMPLETO: 'Superior Incompleto',
+  SUPERIOR_COMPLETO: 'Superior Completo'
+}
 };
 
 ptbrMessages.forms = {
@@ -85,55 +88,49 @@ ptbrMessages.resources = {
       comments: 'Observações',
     },
   },
-  'agenda-configs': {
+
+  users: {
     empty: ptbrMessages.page.empty,
     invite: ptbrMessages.page.invite,
-    name: 'Agenda Config. |||| Agendas Configs',
+    name: 'Usuário |||| Usuários',
     fields: {
       updatedAt: 'Atualizado em',
       updatedBy: 'Atualizado por',
-      dayOfWeek: 'Dia da Semana',
-      time: 'Horário',
-      maxLimit: 'Limite Máximo',
-      listTypeExercise: 'Tipos de Treino',
-      typeExercise: 'Tipos de Treino',
+      username: 'Login',
+      name: 'Nome Completo',
+      password: 'Nova Senha',
+      email: 'E-mail',
+      roles: 'Permissões',
+      phone: 'Telefone',
+      city: 'Cidade',
+      birthdate: 'Data de Nascimento',
+      encryptedPassword: 'Senha',
+      comments: 'Observações',
     },
   },
-  schedulings: {
+
+  mothers: {
     empty: ptbrMessages.page.empty,
     invite: ptbrMessages.page.invite,
-    name: 'Agendamento |||| Agendamentos',
+    name: 'Mãe |||| Mães',
     fields: {
       updatedAt: 'Atualizado em',
       updatedBy: 'Atualizado por',
-      userDesc: 'Usuário',
-      userId: 'Usuário',
-      date: 'Data',
-      time: 'Hora',
-      status: 'Situação',
-      typeTraining: 'Tipos de Treino',
-      typeExercise: 'Tipos de Treino',
+      createdAt: 'Criado em',
+      createdBy: 'Criado por',
+      name: 'Nome Completo',
+      email: 'E-mail',
+      phone: 'Telefone',
+      birthdate: 'Data de Nascimento',
+      cpf: 'CPF',
+      rg: 'RG',
+      pis: 'Número do pis',
+      maritalStatus: 'Estado Cívil',
+      schooling: 'Escolaridade',
+      fatherName: 'Nome do pai',
+      motherName: 'Nome da mãe'
     },
   },
-  'time-offs': {
-    empty: ptbrMessages.page.empty,
-    invite: ptbrMessages.page.invite,
-    name: 'Dia de Folga |||| Dias de Folga',
-    fields: {
-      updatedAt: 'Atualizado em',
-      updatedBy: 'Atualizado por',
-      date: 'Data',
-      time: 'Hora',
-    },
-  },
-  'type-training': {
-    empty: ptbrMessages.page.empty,
-    invite: ptbrMessages.page.invite,
-    name: 'Tipo de treino |||| Tipos de treino',
-    fields: {
-      type: 'Novo Tipo de Treino',
-    },
-  }
 };
 
 export default ptbrMessages;

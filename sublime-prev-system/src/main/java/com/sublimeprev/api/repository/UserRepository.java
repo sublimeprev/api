@@ -11,8 +11,6 @@ import com.sublimeprev.api.model.User;
 public interface UserRepository extends BaseRepository<User, Long> {
 
 	Optional<User> findByUsername(String username);
-
-	Optional<User> findFirstByResetToken(String resetPasswordToken);
 	
 	@Query(value = "select users.id from users inner join user_roles on users.id = user_roles.user_id where users.deleted  = false",
 			nativeQuery = true)

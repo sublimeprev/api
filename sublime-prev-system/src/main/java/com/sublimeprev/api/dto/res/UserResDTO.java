@@ -2,8 +2,6 @@ package com.sublimeprev.api.dto.res;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import com.sublimeprev.api.domain.Role;
@@ -29,11 +27,9 @@ public class UserResDTO {
 	private String newPassword;
 	private boolean admin;
 	private Set<Role> roles;
-	private List<TypeExerciseResDTO> listTypeExercise;
-	private List<Long> typeExercise;
 	private String comments;
 
-	private UserResDTO(User entity, List<TypeExerciseResDTO> listTypeExercise) {
+	private UserResDTO(User entity) {
 		this.id = entity.getId();
 		this.deleted = entity.isDeleted();
 		this.createdBy = entity.getCreatedBy();
@@ -49,27 +45,14 @@ public class UserResDTO {
 		this.newPassword = entity.getNewPassword();
 		this.roles = entity.getRoles();
 		this.admin =  entity.getRoles() != null && entity.getRoles().contains(Role.ADMIN);
-		this.listTypeExercise = listTypeExercise;
-		if(!listTypeExercise.isEmpty() || listTypeExercise != null) {
-			List<Long> idsTypeExercise = new ArrayList<>();
-			listTypeExercise.forEach(type -> {
-				idsTypeExercise.add(type.getId());
-				;
-			});
-			this.typeExercise = idsTypeExercise;
-		}
 		this.comments = entity.getComments();
 		
 		
 	}
 
 	public static UserResDTO of(User entity) {
-		return entity == null ? null : new UserResDTO(entity, listTypeExercise(entity));
+		return entity == null ? null : new UserResDTO(entity);
 	}
 	
-	private static List<TypeExerciseResDTO> listTypeExercise(User entity){
-		List<TypeExerciseResDTO> list = TypeExerciseResDTO.listTypeExerciseResDTO(entity.getTypesExercises());
-		return list;
-	}
 }
 

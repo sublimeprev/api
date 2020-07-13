@@ -17,11 +17,6 @@ import javax.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
 
-/**
- * 
- * @author nicolas.wojcichoski
- *
- */
 public class SearchUtils {
 
 	private static final String TRANSLATE_FROM = "'áàâãäéèêëíìïóòôõöúùûüÁÀÂÃÄÉÈÊËÍÌÏÓÒÔÕÖÚÙÛÜçÇ'";

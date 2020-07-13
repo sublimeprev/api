@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 const LocalDateTimeField = ({ source, record = {} }) =>
   record[source] ? (
     <Typography>
-      {format(parseISO(record[source]), 'dd/MM/yyyy HH:mm')}
+      {format(parseISO(record[source]), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")}
     </Typography>
   ) : (
     <span />

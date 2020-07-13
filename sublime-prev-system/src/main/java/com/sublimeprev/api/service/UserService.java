@@ -26,7 +26,6 @@ public class UserService {
 
 	private final UserRepository repository;
 	private final PasswordService passwordService;
-	private final SchedulingService schedulingService;
 
 	public Page<User> findAll(PageReq query) {
 		Specification<User> deleted = SearchUtils.specByDeleted(query.isDeleted());
@@ -74,7 +73,6 @@ public class UserService {
 	public void logicalExclusion(Long id) {
 		if (!this.repository.findByIdAndNotDeleted(id).isPresent())
 			throw new ServiceException(Messages.record_not_found);
-		this.schedulingService.allLogicalExclusionByUser(id);
 		this.repository.softDelete(id);
 	}
 

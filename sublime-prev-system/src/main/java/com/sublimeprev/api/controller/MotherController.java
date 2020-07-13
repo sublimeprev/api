@@ -20,53 +20,52 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sublimeprev.api.bases.PageReq;
 import com.sublimeprev.api.bases.PageRes;
-import com.sublimeprev.api.dto.req.UserReqDTO;
-import com.sublimeprev.api.dto.res.UserResDTO;
-import com.sublimeprev.api.model.User;
-import com.sublimeprev.api.service.UserService;
+import com.sublimeprev.api.dto.req.MotherReqDTO;
+import com.sublimeprev.api.dto.res.MotherResDTO;
+import com.sublimeprev.api.model.Mother;
+import com.sublimeprev.api.service.MotherService;
 
 import lombok.AllArgsConstructor;
 
-
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserController {
-
-	private final UserService service;
+@RequestMapping(value = "/api/mothers", produces = MediaType.APPLICATION_JSON_VALUE)
+public class MotherController {
+	
+	private final MotherService service;
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping
-	public PageRes<UserResDTO> index(PageReq query) {
-		Page<User> page = this.service.findAll(query);
-		return new PageRes<UserResDTO>(page.getContent().stream().map(UserResDTO::of).collect(Collectors.toList()),
+	public PageRes<MotherResDTO> index(PageReq query) {
+		Page<Mother> page = this.service.findAll(query);
+		return new PageRes<MotherResDTO>(page.getContent().stream().map(MotherResDTO::of).collect(Collectors.toList()),
 				page.getTotalElements(), page.getTotalPages());
 	}
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/all")
-	public List<User> getAllUsers(){
-		return this.service.getAllUsers();
+	public List<Mother> getAllUsers(){
+		return this.service.getAllMothers();
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping
-	public UserResDTO store(@Valid @RequestBody UserReqDTO dto) {
-		User user = this.service.save(dto.toEntity(new User()));
-		return UserResDTO.of(user);
+	public MotherResDTO store(@Valid @RequestBody MotherReqDTO dto) {
+		Mother mother = this.service.save(dto.toEntity(new Mother()));
+		return MotherResDTO.of(mother);
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/{id}")
-	public UserResDTO show(@PathVariable("id") Long id) {
-		return UserResDTO.of(this.service.findById(id));
+	public MotherResDTO show(@PathVariable("id") Long id) {
+		return MotherResDTO.of(this.service.findById(id));
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PutMapping("/{id}")
-	public UserResDTO update(@PathVariable("id") Long id, @Valid @RequestBody UserReqDTO dto) {
-		User user = dto.toEntity(this.service.findById(id));
-		return UserResDTO.of(this.service.save(user));
+	public MotherResDTO update(@PathVariable("id") Long id, @Valid @RequestBody MotherReqDTO dto) {
+		Mother mother = dto.toEntity(this.service.findById(id));
+		return MotherResDTO.of(this.service.save(mother));
 	}
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -77,8 +76,8 @@ public class UserController {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/many")
-	public List<UserResDTO> showMany(@RequestParam Long[] ids) {
-		return this.service.findByIds(ids).stream().map(UserResDTO::of).collect(Collectors.toList());
+	public List<MotherResDTO> showMany(@RequestParam Long[] ids) {
+		return this.service.findByIds(ids).stream().map(MotherResDTO::of).collect(Collectors.toList());
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -92,4 +91,5 @@ public class UserController {
 	public void permanentDestroy(@PathVariable("id") Long id) {
 		this.service.permanentDestroy(id);
 	}
+
 }

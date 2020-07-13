@@ -5,7 +5,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.sublimeprev.api.config.i18n.ServiceException;
 import com.sublimeprev.api.config.security.AuthUtil;
@@ -24,7 +23,6 @@ public class ProfileService {
 
 	private final UserRepository userRepository;
 	private final TokenStore tokenStore;
-	private final EmailService emailService;
 	private final PasswordService passwordService;
 
 	public User findAuthenticatedUser() {
@@ -41,23 +39,6 @@ public class ProfileService {
 				this.tokenStore.removeRefreshToken(accessToken.getRefreshToken());
 			}
 		}
-	}
-
-	public void forgotPassword(String username) {
-		User user = this.userRepository.findByUsername(username)
-				.orElseThrow(() -> new ServiceException("Usuário não cadastrado"));
-		user.setResetToken(AuthUtil.generateRandomToken() + user.getId().toString());
-		user = userRepository.save(user);
-		this.emailService.sendForgotPasswordEmail(user);
-	}
-
-	public void resetPassword(String resetPasswordToken, String newPassword, String confirmation) {
-		User user = userRepository.findFirstByResetToken(resetPasswordToken)
-				.orElseThrow(() -> new ServiceException("O link de recuperação de senha utilizado não é mais válido."));
-		this.passwordService.newPasswordValidation(newPassword, confirmation);
-		user.setEncryptedPassword(passwordService.encode(newPassword));
-		user.setResetToken(null);
-		this.userRepository.save(user);
 	}
 
 	public void changePassword(String oldPassword, String newPassword, String confirmation) {
@@ -79,29 +60,8 @@ public class ProfileService {
 		this.passwordService.newPasswordValidation(dto.getPassword(), dto.getPasswordConfirmation());
 		User user = dto.toEntity(new User());
 		user.setEncryptedPassword(this.passwordService.encode(dto.getPassword()));
-		user.setEmailVerified(false);
-		user.setResetToken(AuthUtil.generateRandomToken() + user.getUsername().toString());
 		user = this.userRepository.save(user);
-		this.emailService.sendConfirmEmail(user);
 		log.info("Usuário cadastrado com sucesso username: " + user.getUsername());
 		return user;
-	}
-
-	public void confirmEmail(String token) {
-		if (StringUtils.isEmpty(token))
-			throw new ServiceException("O link de confirmação de e-mail utilizado não é mais válido.");
-		User user = userRepository.findFirstByResetToken(token).orElseThrow(
-				() -> new ServiceException("O link de confirmação de e-mail utilizado não é mais válido."));
-		user.setEmailVerified(true);
-		user.setResetToken(null);
-		user = this.userRepository.save(user);
-	}
-
-	public void saveFirebaseToken(String firebaseToken) {
-		if (StringUtils.hasText(firebaseToken) && !firebaseToken.equals("null")) {
-			User user = this.findAuthenticatedUser();
-			user.setFirebaseToken(firebaseToken);
-			this.userRepository.save(user);
-		}
 	}
 }

@@ -1,8 +1,7 @@
 import { Box, Grid, Tab, Tabs, Toolbar } from '@material-ui/core';
 import PeopleIcon from '@material-ui/icons/People';
+import GroupSharpIcon from '@material-ui/icons/GroupSharp';
 import React from 'react';
-import axios from 'axios';
-import URL from './../providers/URLs';
 import {
   Create,
   Datagrid,
@@ -19,58 +18,26 @@ import {
   TextField,
   TextInput,
   TopToolbar,
-  ChipField,
-  CheckboxGroupInput,
-  ArrayField,
-  SingleFieldList,
 } from 'react-admin';
 import { EnumCheckboxInput, EnumField } from '../components/Enums';
 import { ListFilterWithDeleteds } from '../components/ListFilter';
 import LocalDateTimeField from '../components/LocalDateTimeField';
 import { TabPanel } from '../components/TabPanels';
-import EvaluationsByUser from './EvaluationsByUser';
-import TrainingsByUser from './TrainingsByUser';
-import UserAgendaConfig from './UsersAgendaConfig';
-import WeightControlByUser from './WeightControlByUser';
 import RestoreButton from '../components/RestoreButton';
 
-const typeTraining = [];
-function getList(){
-
-  axios.get(`${URL.baseURL}/api/type-training/all`,{
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-  }).then(res => {
-    typeTraining.length = 0;
-    res.data.forEach(type => {
-      type = {id: type.id, name:type.type}
-      typeTraining.push(type)
-      
-    })
-  })
-}
-
 export const UserList = props => (
-  getList(),
   <List
     filters={<ListFilterWithDeleteds />}
     bulkActionButtons={false}
     {...props}
   >
     <Datagrid rowClick="edit">
-      <TextField source="id" />
-      <LocalDateTimeField source="updatedAt" />
+      <TextField source="name" />
       <TextField source="username" />
       <TextField source="email" />
       <TextField source="phone" />
       <EnumField source="roles" />
-      <ArrayField source="listTypeExercise">
-          <SingleFieldList>
-              <ChipField source="type" label="Tipos"/>
-          </SingleFieldList>
-      </ArrayField>
+      <TextField source="city" />
     </Datagrid>
   </List>
 );
@@ -133,16 +100,6 @@ const UserForm = props => {
               <EnumCheckboxInput resource="users" source="roles" />
             </Grid>
             <Grid item xs={3}>
-              <DateInput resource="users" source="schedulingsEndDate" />
-            </Grid>
-            <Grid item xs={12}>
-              <CheckboxGroupInput 
-                resource = "users"
-                source="typeExercise"
-                choices={typeTraining} 
-                />
-            </Grid>
-            <Grid item xs={3}>
               <TextInput
                 multiline
                 resource="users"
@@ -194,26 +151,10 @@ const UserTabs = props => {
       <div>
         <Tabs value={value} onChange={handleChange} variant="standard">
           <Tab label="Geral" {...a11yProps(0)} />
-          <Tab label="Treinos" {...a11yProps(1)} />
-          <Tab label="Avaliações" {...a11yProps(2)} />
-          <Tab label="Agendamentos Config" {...a11yProps(3)} />
-          <Tab label="Controle de Peso" {...a11yProps(4)} />
         </Tabs>
       </div>
       <TabPanel value={value} index={0}>
         <UserForm {...props} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <TrainingsByUser {...props} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <EvaluationsByUser {...props} />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <UserAgendaConfig {...props} />
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        <WeightControlByUser {...props} />
       </TabPanel>
     </div>
   );
@@ -238,13 +179,6 @@ export const UserCreate = props => (
       <TextInput source="phone" validate={required()} />
       <DateInput source="birthdate" validate={required()} />
       <EnumCheckboxInput source="roles" />
-      <CheckboxGroupInput 
-        resource="users"
-        source="typeExercise"  
-        validate={required()} 
-        choices={typeTraining}   
-        
-      />
       <TextInput
         multiline
         resource="users"
@@ -264,5 +198,5 @@ export default {
   create: UserCreate,
   edit: UserEdit,
   list: UserList,
-  icon: PeopleIcon,
+  icon: GroupSharpIcon,
 };

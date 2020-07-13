@@ -5,15 +5,21 @@ import {
   Title
 } from 'react-admin';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import TrainingTodays from './TrainingTodays.js';
+import Logo from '../img/logo_transparente.png';
+import Sublime from '../img/sublime.png';
 
 export const Dashboard = () => (
   <Card>
     <Title title="Bem Vindo" />
-    <CardContent style={{ textAlign: 'center' }}>
-      Cesar GYM Backoffice
+    <CardContent style={{ textAlign: 'center'}}>
+      <h1>Backoffice</h1>
     </CardContent>
-    <TrainingTodays />
+    <CardContent style={{ textAlign: 'center'}}>
+      <img style={{ width:'35%'}} src={Logo} alt="Logo sublimeprev"></img>
+    </CardContent>
+    <CardContent style={{ textAlign: 'center'}}>
+      <img style={{ width:'35%'}} src={Sublime} alt="Logo sublimeprev"></img>
+    </CardContent>
   </Card>
 );
 

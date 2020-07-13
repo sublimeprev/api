@@ -2,7 +2,6 @@ package com.sublimeprev.api.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,12 +15,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
-
-import org.hibernate.annotations.Fetch;
 
 import com.sublimeprev.api.bases.BaseEntity;
 import com.sublimeprev.api.domain.Role;
@@ -64,14 +60,7 @@ public class User extends BaseEntity implements Serializable {
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
 	@Column(name = "role_id")
 	private Set<Role> roles;
-	private String resetToken;
-	private boolean emailVerified;
-	private String firebaseToken;
-	private LocalDate schedulingsEndDate;
 	@Transient
 	private String newPassword;
-	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-	private List<TypeExercise> typesExercises;
 	private String comments;
 }

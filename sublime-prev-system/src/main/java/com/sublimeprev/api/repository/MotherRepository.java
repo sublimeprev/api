@@ -8,7 +8,7 @@ import com.sublimeprev.api.bases.BaseRepository;
 import com.sublimeprev.api.model.Mother;
 
 public interface MotherRepository extends BaseRepository<Mother, Long>{
-	@Query("select m from Mother m where m.cpf = ?1 and m.deleted is true")
+	@Query("select m from Mother m where m.cpf = ?1 and m.deleted is false")
 	Optional<Mother> findByMother(String cpf);
 
 }

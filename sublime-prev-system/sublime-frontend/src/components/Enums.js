@@ -9,16 +9,21 @@ import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
 const enums = {
   roles: ['ADMIN'],
-  dayOfWeek: [
-    'MONDAY',
-    'TUESDAY',
-    'WEDNESDAY',
-    'THURSDAY',
-    'FRIDAY',
-    'SATURDAY',
-    'SUNDAY',
+  maritalStatus: [
+    'SOLTEIRO',
+    'CASADO',
+    'DICORCIADO',
+    'VIUVO'
   ],
-  schedulingStatus: ['CANCELADO', 'MARCADO'],
+
+  schooling: [
+    'FUNDAMENTAL_INCOMPLETO',
+    'FUNDAMENTAL_COMPLETO',
+    'MEDIO_INCOMPLETO',
+    'MEDIO_COMPLETO',
+    'SUPERIOR_INCOMPLETO',
+    'SUPERIOR_COMPLETO'
+  ]
 };
 const enumsStyles = {
   schedulingStatus: [

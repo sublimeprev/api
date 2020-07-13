@@ -1,13 +1,13 @@
 package com.sublimeprev.api.service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.threeten.bp.LocalDate;
 
 import com.sublimeprev.api.bases.PageReq;
 import com.sublimeprev.api.config.i18n.Messages;
@@ -37,34 +37,18 @@ public class MotherService {
 		return repository.findAll();
 	}
 	
-	public Mother saveMother(Mother mother) {
-		this.repository.findByMother(mother.getCpf()).orElseThrow(() -> new ServiceException("Mãe já esta cadastrada."));
-		if(mother.getBirthdate().getDayOfYear() < LocalDate.now().getYear() - 10) {
-			throw new ServiceException("Data de aniversário incorreto.");
+	public Mother save(Mother mother) {
+		if(this.repository.findByMother(mother.getCpf()).isPresent()) {
+			new ServiceException("Mãe já esta cadastrada.");
+		}
+		if(mother.getCpf().isEmpty() || mother.getCpf() == null) {
+			throw new ServiceException("Campo cpf deve estar preenchido corretamente.");
 		}
 		LocalDateTime today = LocalDateTime.now();
 		User userAuthenticated = userService.findAuthenticatedUser();
 		mother.setCreatedAt(today);
 		mother.setUpdatedBy(userAuthenticated.getName());
 		return this.repository.save(mother);
-	}
-	
-	public Mother updateMother(Mother mother) {
-		LocalDateTime today = LocalDateTime.now();
-		Mother motherCurrent = this.findById(mother.getId());
-		motherCurrent.setBirthdate(mother.getBirthdate());
-		motherCurrent.setCpf(mother.getCpf());
-		motherCurrent.setEmail(mother.getEmail());
-		motherCurrent.setFatherName(mother.getFatherName());
-		motherCurrent.setMaritalStatus(mother.getMaritalStatus());
-		motherCurrent.setMotherName(mother.getMotherName());
-		motherCurrent.setName(mother.getName());
-		motherCurrent.setPhone(mother.getPhone());
-		motherCurrent.setPis(mother.getPis());
-		motherCurrent.setRg(mother.getRg());
-		motherCurrent.setSchooling(mother.getSchooling());
-		motherCurrent.setUpdatedAt(today);
-		return this.repository.save(motherCurrent);
 	}
 	
 	public Mother findById(Long IdMother) {
@@ -85,5 +69,15 @@ public class MotherService {
 	
 	public List<Mother> findAllDeleted() {
 		return this.repository.findAllDeleted();
+	}
+	
+	public List<Mother> findByIds(Long[] ids) {
+		return this.repository.findAllById(Arrays.asList(ids));
+	}
+	
+	public void permanentDestroy(Long id) {
+		if (!this.repository.findDeletedById(id).isPresent())
+			throw new ServiceException(Messages.record_not_found_at_recycle_bin);
+		this.repository.deleteById(id);
 	}
 }

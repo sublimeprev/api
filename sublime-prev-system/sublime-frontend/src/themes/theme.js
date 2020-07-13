@@ -8,14 +8,14 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: { main: '#000' },
-    secondary: { main: '#febe32' },
+    secondary: { main: '#929292' },
     contrastThreshold: 3,
     tonalOffset: 0.2,
   },
   overrides: {
     MuiAppBar: {
       root: {
-        backgroundColor: '#febe32 !important',
+        backgroundColor: '#929292 !important',
       },
       colorSecondary: {
         color: '#000',
