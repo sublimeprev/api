@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "com.sublimeprev.api.config.AppProperties",
+      "sourceType": "com.sublimeprev.api.config.AppProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.app-prefix",
+      "type": "java.lang.String",
+      "sourceType": "com.sublimeprev.api.config.AppProperties"
+    },
+    {
+      "name": "app.confirm-email-link",
+      "type": "java.lang.String",
+      "sourceType": "com.sublimeprev.api.config.AppProperties"
+    },
+    {
+      "name": "app.email-from",
+      "type": "java.lang.String",
+      "sourceType": "com.sublimeprev.api.config.AppProperties"
+    },
+    {
+      "name": "app.firebase-android-id",
+      "type": "java.lang.String",
+      "sourceType": "com.sublimeprev.api.config.AppProperties"
+    },
+    {
+      "name": "app.firebase-ios-id",
+      "type": "java.lang.String",
+      "sourceType": "com.sublimeprev.api.config.AppProperties"
+    },
+    {
+      "name": "app.firebase-server-key",
+      "type": "java.lang.String",
+      "sourceType": "com.sublimeprev.api.config.AppProperties"
+    },
+    {
+      "name": "app.reset-password-link",
+      "type": "java.lang.String",
+      "sourceType": "com.sublimeprev.api.config.AppProperties"
+    }
+  ],
+  "hints": []
+}
