@@ -1,6 +1,6 @@
+import React from 'react';
 import { Box, Grid, Tab, Tabs, Toolbar } from '@material-ui/core';
 import PregnantWomanIcon from '@material-ui/icons/PregnantWoman';
-import React from 'react';
 import {
   Create,
   Datagrid,
@@ -17,12 +17,15 @@ import {
   TextField,
   TextInput,
   TopToolbar,
+  Loading,
+  useNotify,
 } from 'react-admin';
 import { EnumRadioInput, EnumField } from '../components/Enums';
 import { ListFilterWithDeleteds } from '../components/ListFilter';
 import { TabPanel } from '../components/TabPanels';
 import RestoreButton from '../components/RestoreButton';
-// import TrainingsByUser from './TrainingsByUser';
+import AddressMother from './AddressMother';
+
 
 export const MotherList = props => (
   <List
@@ -154,107 +157,6 @@ const MotherForm = props => {
   );
 };
 
-const AddressForm = props => {
-  return (
-    <FormWithRedirect
-      {...props}
-      redirect={false}
-      render={formProps => (
-        <form onSubmit={formProps.submit}>
-          <Grid container spacing={2}>
-            <Grid item xs={3}>
-              <TextInput resource="address-mothers" source="id" disabled />
-            </Grid>
-            <Grid item xs={3}>
-              <TextInput resource="address-mothers" source="createdBy" disabled />
-            </Grid>
-            <Grid item xs={3}>
-              <TextInput resource="address-mothers" source="updatedBy" disabled />
-            </Grid>
-            <Grid item xs={3}>
-              <DateTimeInput resource="address-mothers" source="createdAt" disabled/>
-            </Grid>
-            <Grid item xs={3}>
-              <DateTimeInput resource="address-mothers" source="updatedAt" disabled/>
-            </Grid>
-            <Grid item xs={3}>
-              <TextInput
-                resource="address-mothers"
-                source="street"
-                validate={required()}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextInput
-                resource="address-mothers"
-                source="numberHouse"
-                validate={required()}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextInput
-                resource="address-mothers"
-                source="neighborhood"
-                validate={required()}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextInput
-                resource="address-mothers"
-                source="city"
-                validate={required()}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextInput
-                resource="address-mothers"
-                source="state"
-                validate={required()}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextInput
-                resource="address-mothers"
-                source="complement"
-                validate={required()}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextInput
-                resource="address-mothers"
-                source="zipcode"
-                validate={required()}
-              />
-            </Grid>
-          </Grid>
-          <Toolbar disableGutters>
-            <Box display="flex" justifyContent="space-between" width="100%">
-              <SaveButton
-                saving={formProps.saving}
-                handleSubmitWithRedirect={formProps.handleSubmitWithRedirect}
-              />
-              {!formProps.record.deleted ? (
-                <DeleteButton
-                  record={formProps.record}
-                  resource={formProps.resource}
-                  basePath={formProps.basePath}
-                  undoable={formProps.undoable}
-                />
-              ) : (
-                <RestoreButton
-                  record={formProps.record}
-                  resource={formProps.resource}
-                  basePath={formProps.basePath}
-                />
-              )}
-            </Box>
-          </Toolbar>
-        </form>
-      )}
-    />
-  );
-};
-
 const MotherTabs = props => {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -278,7 +180,7 @@ const MotherTabs = props => {
         <MotherForm {...props} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <AddressForm {...props} />
+        <AddressMother {...props} />
       </TabPanel>
     </div>
   );

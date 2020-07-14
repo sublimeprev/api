@@ -74,5 +74,11 @@ public class AddressMotherController {
 	public void permanentDestroy(@PathVariable("id") Long id) {
 		this.service.permanentDestroy(id);
 	}
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@GetMapping("/verify-address/{idMother}")
+	public boolean verifyAddressMother(@PathVariable ("idMother") Long idMother) {
+		return this.service.verifyAddresMother(idMother);
+	}
 
 }
