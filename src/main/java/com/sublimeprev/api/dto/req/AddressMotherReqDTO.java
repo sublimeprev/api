@@ -9,9 +9,9 @@ import lombok.Data;
 
 @Data
 public class AddressMotherReqDTO {
+	private Long id;
 	@NotBlank
 	private String street;
-	@NotBlank
 	private int numberHouse;
 	@NotBlank
 	private String neighborhood;
@@ -24,14 +24,18 @@ public class AddressMotherReqDTO {
 	@NotNull
 	private Long idMother;
 	
-public AddressMother toEntity(AddressMother entity) {
-		this.setStreet(entity.getStreet());
-		this.setNumberHouse(entity.getNumberHouse());
-		this.setNeighborhood(entity.getNeighborhood());
-		this.setCity(entity.getCity());
-		this.setState(entity.getState());
-		this.setComplement(entity.getComplement());
-		this.setZipcode(entity.getZipcode());
-		return entity;
+public AddressMother toEntity(AddressMotherReqDTO entity) {
+		AddressMother addressMother = AddressMother.builder()
+				.id(entity.getId())
+				.street(entity.getStreet())
+				.numberHouse(entity.getNumberHouse())
+				.neighborhood(entity.getNeighborhood())
+				.city(entity.getCity())
+				.state(entity.getState())
+				.complement(entity.getComplement())
+				.zipcode(entity.getZipcode())
+				.build();
+		
+		return addressMother;
 	}
 }

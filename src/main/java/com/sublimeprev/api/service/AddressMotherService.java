@@ -22,8 +22,10 @@ public class AddressMotherService {
 	private MotherService motherService;
 
 	public AddressMother save(AddressMother addresMother, Long idMother) {
-		Mother mother = this.motherService.findById(idMother);
-		addresMother.setMother(mother);
+		if(idMother != null) {
+			Mother mother = this.motherService.findById(idMother);
+			addresMother.setMother(mother);
+		}
 		return this.repository.save(addresMother);
 	}
 

@@ -21,6 +21,7 @@ public class AddressMotherResDTO {
 	private String state;
 	private String complement;
 	private String zipcode;
+	private Long idMother;
 	
 	private AddressMotherResDTO(AddressMother entity) {
 		this.id = entity.getId();
@@ -36,6 +37,7 @@ public class AddressMotherResDTO {
 		this.setState(entity.getState());
 		this.setComplement(entity.getComplement());
 		this.setZipcode(entity.getZipcode());
+		this.setIdMother(entity.getMother().getId());
 	}
 
 	public static AddressMotherResDTO of(AddressMother entity) {

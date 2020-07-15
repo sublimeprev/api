@@ -3,8 +3,6 @@ package com.sublimeprev.api.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,8 +31,8 @@ public class AddressMotherController {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping
-	public AddressMotherResDTO store(@Valid @RequestBody AddressMotherReqDTO dto) {
-		AddressMother addressMother = this.service.save(dto.toEntity(new AddressMother()), dto.getIdMother());
+	public AddressMotherResDTO store(@RequestBody AddressMotherReqDTO dto) {
+		AddressMother addressMother = this.service.save(dto.toEntity(dto), dto.getIdMother());
 		return AddressMotherResDTO.of(addressMother);
 	}
 
@@ -45,9 +43,9 @@ public class AddressMotherController {
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	@PutMapping("/{id}")
-	public AddressMotherResDTO update(@PathVariable("id") Long id, @Valid @RequestBody AddressMotherReqDTO dto) {
-		AddressMother addressMother = dto.toEntity(this.service.findById(id));
+	@PutMapping()
+	public AddressMotherResDTO update(@RequestBody AddressMotherReqDTO dto) {
+		AddressMother addressMother = dto.toEntity(dto);
 		return AddressMotherResDTO.of(this.service.save(addressMother, null));
 	}
 	

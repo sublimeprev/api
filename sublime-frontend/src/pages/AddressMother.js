@@ -6,14 +6,14 @@ import {
     useNotify,
     required,
     SaveButton,
-    DeleteButton,
-    RestoreButton
   } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
+import SaveIcon from '@material-ui/icons/Save';
 import {
     CardContent, 
     TextField,
     Toolbar,
+    Button,
     Box} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +29,7 @@ export default function AddressMother({...props}){
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
     const [hasAddress, setHasAddress] = useState(true);
+    const [buttonDisabled, setButtonDisabled] = useState(true)
     const [address, setAddress] = useState({
         street: "",
         numberHouse: "",
@@ -54,22 +55,32 @@ export default function AddressMother({...props}){
     
     const verifyAddress = () => {
         setLoading(true)
-        axios.get(`${URL.baseURL}/api/address-mothers/verify-address/${idMother}`,{
+        axios.get(`${URL.baseURL}/api/address-mothers/${idMother}`,{
               headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               }
             }).then(res => {
-                setHasAddress(res.data);
+                setAddress(res.data);
                 console.log(res.data)
               setLoading(false);
             }).catch(error => {
-              notify(error.message, 'warning');
+                setHasAddress(false)
             });
         }
+
+    const verfifyFildsCreateAddress = () => {
+        if(address.street === "" || address.neighborhood === "" || address.city === ""|| address.state === ""){
+            setButtonDisabled(true)
+        }else {
+            setButtonDisabled(false)
+        }
+    }
     const onSubmitCreateAddress = () => {
+        console.log("onsubmit")
+        console.log(address)
         setLoading(true)
-        axios.post(`${URL.baseURL}/api/address-mothers/verify-address`, address,{
+        axios.post(`${URL.baseURL}/api/address-mothers`, address,{
                 headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -77,11 +88,36 @@ export default function AddressMother({...props}){
             }).then(res => {
                 setHasAddress(res.data);
                 console.log(res.data)
+                notify("Endereço salvo", 'sucess');
                 setLoading(false);
             }).catch(error => {
                 notify(error.message, 'warning');
             });
     }
+
+    const onSubmitUpdateAddress = () => {
+        console.log("onsubmit")
+        console.log(address)
+        setLoading(true)
+        axios.put(`${URL.baseURL}/api/address-mothers`, address,{
+                headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(res => {
+                setHasAddress(res.data);
+                console.log(res.data)
+                notify("Endereço editado", 'sucess');
+                setLoading(false);
+            }).catch(error => {
+                notify(error.message, 'warning');
+            });
+    }
+
+
+    useEffect(()=>{
+        verfifyFildsCreateAddress()
+    },[address])
     
     useEffect(()=>{
         verifyAddress()
@@ -90,21 +126,42 @@ export default function AddressMother({...props}){
     const createAddress = () => {
         return (
             <>
-                <CardContent style={{ textAlign: 'center' }}>
+                <CardContent style={{ textAlign: 'center' }} >
                     <form className={classes.root} noValidate autoComplete="off">
-                        <TextField name="street" label="Rua" variant="filled" value={address.street} onChange={handleChange}/>
-                        <TextField name="numberHouse" type="number" label="Número da casa" variant="filled" value={address.numberHouse} onChange={handleChange} />
-                        <TextField name="neighborhood" label="Bairro" variant="filled" value={address.neighborhood} onChange={handleChange}/>
-                        <TextField name="city" label="Cidade" variant="filled" value={address.city} onChange={handleChange}/>
-                        <TextField name="state" label="Estado" variant="filled" value={address.state} onChange={handleChange}/>
+                        <TextField required name="state" label="Estado" variant="filled" value={address.state} onChange={handleChange}/>
+                        <TextField required name="city" label="Cidade" variant="filled" value={address.city} onChange={handleChange}/>
+                        <TextField required name="neighborhood" label="Bairro" variant="filled" value={address.neighborhood} onChange={handleChange}/>
+                        <TextField required name="street" label="Rua" variant="filled" value={address.street} onChange={handleChange}/>
                         <TextField name="complement" label="Complemento" variant="filled" value={address.complement} onChange={handleChange}/>
+                        <TextField name="numberHouse" type="number" label="Número da casa" variant="filled" value={address.numberHouse} onChange={handleChange} />
                         <TextField name="zipcode" type="number" label="CEP" variant="filled" value={address.zipcode} onChange={handleChange}/>
-                        <Toolbar disableGutters>
-                            <Box display="flex" justifyContent="space-between" width="100%">
-                                <SaveButton
-                                    onClick={() => { alert('clicado') }}
-                                />
-                            </Box>
+                        <Toolbar>
+                            <Button disabled={buttonDisabled} variant="contained" color="primary" onClick={onSubmitCreateAddress}>
+                                <SaveIcon/>SALVAR
+                            </Button>
+                        </Toolbar>
+                    </form>
+                </CardContent>
+            </>
+        )
+    }
+
+    const editAddress = () => {
+        return (
+            <>
+                <CardContent style={{ textAlign: 'center' }} >
+                    <form className={classes.root} noValidate autoComplete="off">
+                    <TextField required name="state" label="Estado" variant="filled" value={address.state} onChange={handleChange}/>
+                        <TextField required name="city" label="Cidade" variant="filled" value={address.city} onChange={handleChange}/>
+                        <TextField required name="neighborhood" label="Bairro" variant="filled" value={address.neighborhood} onChange={handleChange}/>
+                        <TextField required name="street" label="Rua" variant="filled" value={address.street} onChange={handleChange}/>
+                        <TextField name="complement" label="Complemento" variant="filled" value={address.complement} onChange={handleChange}/>
+                        <TextField name="numberHouse" type="number" label="Número da casa" variant="filled" value={address.numberHouse} onChange={handleChange} />
+                        <TextField name="zipcode" type="number" label="CEP" variant="filled" value={address.zipcode} onChange={handleChange}/>
+                        <Toolbar>
+                            <Button disabled={buttonDisabled} variant="contained" color="primary" onClick={onSubmitUpdateAddress}>
+                                <SaveIcon/>EDIT
+                            </Button>
                         </Toolbar>
                     </form>
                 </CardContent>
@@ -114,7 +171,7 @@ export default function AddressMother({...props}){
 
     return(
         <>
-            {hasAddress?<p>true</p>:createAddress()}
+            {hasAddress?editAddress():createAddress()}
             
         </>
     )
