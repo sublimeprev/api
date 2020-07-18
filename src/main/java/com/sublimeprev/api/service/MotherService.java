@@ -1,5 +1,6 @@
 package com.sublimeprev.api.service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,5 +71,9 @@ public class MotherService {
 		if (!this.repository.findDeletedById(id).isPresent())
 			throw new ServiceException(Messages.record_not_found_at_recycle_bin);
 		this.repository.deleteById(id);
+	}
+	
+	public Mother findByCpfAndBirthday(String cpf, LocalDate birthday) {
+		return this.repository.findByCpfAndBirthdate(cpf, birthday).orElseThrow(() -> new ServiceException("Mother not found"));
 	}
 }

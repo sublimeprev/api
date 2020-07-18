@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sublimeprev.api.dto.req.ProcessMotherReqDTO;
+import com.sublimeprev.api.dto.res.ProcessMotherClientResDTO;
 import com.sublimeprev.api.dto.res.ProcessMotherResDTO;
 import com.sublimeprev.api.model.ProcessMother;
 import com.sublimeprev.api.service.ProcessMotherService;
@@ -82,6 +83,12 @@ public class ProcessMotherController {
 	@GetMapping("/verify-address/{idMother}")
 	public boolean verifyAddressMother(@PathVariable ("idMother") Long idMother) {
 		return this.service.verifyAddresMother(idMother);
+	}
+	
+	@GetMapping("/mother-client/{cpf}/{birthday}")
+	public ProcessMotherClientResDTO findProcessMotherClient(@PathVariable ("cpf") String cpf, @PathVariable String birthday) {
+		ProcessMother  processMother = this.service.findByCpfAndBirthdayMother(cpf, birthday);
+		return ProcessMotherClientResDTO.of(processMother);
 	}
 
 }

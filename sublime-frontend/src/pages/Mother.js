@@ -78,7 +78,7 @@ const MotherForm = props => {
               <TextInput
                 resource="mothers"
                 source="email"
-                validate={required()}
+               
               />
             </Grid>
             <Grid item xs={3}>
@@ -106,6 +106,20 @@ const MotherForm = props => {
               <TextInput
                 resource="mothers"
                 source="phone"
+                validate={required()}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <TextInput
+                resource="mothers"
+                source="motherName"
+                validate={required()}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <TextInput
+                resource="mothers"
+                source="fatherName"
                 validate={required()}
               />
             </Grid>
@@ -207,15 +221,15 @@ export const MotherEdit = props => {
 export const MotherCreate = props => (
   <Create undoable="false" actions={<FormActions />} {...props}>
     <SimpleForm>
-      <TextInput  source="email" validate={required()} />
+      <TextInput  source="email" />
       <TextInput source="name" validate={required()} />
       <TextInput source="phone" validate={required()} />
       <DateInput source="birthdate" validate={required()} />
       <TextInput source="cpf" validate={required()} />
       <TextInput source="rg" validate={required()} />
       <TextInput source="pis" validate={required()} />
-      <TextInput source="motherName" validate={required()} />
-      <TextInput source="fatherName" validate={required()} />
+      <TextInput source="motherName"/>
+      <TextInput source="fatherName" />
       <EnumRadioInput
         resource="mothers"
         source="schooling"

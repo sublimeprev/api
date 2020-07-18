@@ -203,7 +203,7 @@ export default function ProcessMother({...props}){
                             <MenuItem value={'EXIGENCIA'}>Exigência</MenuItem>
                             </Select>
                         </FormControl>
-                        <TextField multiline rowsMax={4} required name="requirements" label="Exigências" variant="filled" value={process.requirements} onChange={handleChange}/>
+                        <TextField multiline rowsMax={4} name="requirements" label="Exigências" variant="filled" value={process.requirements} onChange={handleChange}/>
                         <TextField multiline rowsMax={4} name="observation" label="Obsercações" variant="filled" value={process.observation} onChange={handleChange}/>
                         <Toolbar>
                             <Button disabled={buttonDisabled} variant="contained" color="primary" onClick={onSubmitUpdateProcess}>

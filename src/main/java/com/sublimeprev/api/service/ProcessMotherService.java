@@ -79,4 +79,10 @@ public class ProcessMotherService {
 			return false;
 		}
 	}
+	
+	public ProcessMother findByCpfAndBirthdayMother(String cpf, String birthday) {
+		LocalDate birth = LocalDate.parse(birthday);
+		Mother mother = this.motherService.findByCpfAndBirthday(cpf, birth);
+		return this.findByMother(mother.getId());
+	}
 }
