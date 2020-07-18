@@ -25,6 +25,8 @@ import { ListFilterWithDeleteds } from '../components/ListFilter';
 import { TabPanel } from '../components/TabPanels';
 import RestoreButton from '../components/RestoreButton';
 import AddressMother from './AddressMother';
+import ChildrenMother from './ChildrenMother';
+import ProcessMother from './ProcessMother';
 
 
 export const MotherList = props => (
@@ -174,6 +176,8 @@ const MotherTabs = props => {
         <Tabs value={value} onChange={handleChange} variant="standard">
           <Tab label="Geral" {...a11yProps(0)} />
           <Tab label="Endereço" {...a11yProps(1)} />
+          <Tab label="Filho" {...a11yProps(2)} />
+          <Tab label="Processo" {...a11yProps(3)} />
         </Tabs>
       </div>
       <TabPanel value={value} index={0}>
@@ -181,6 +185,12 @@ const MotherTabs = props => {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <AddressMother {...props} />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <ChildrenMother {...props} />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <ProcessMother {...props} />
       </TabPanel>
     </div>
   );

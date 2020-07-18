@@ -1,5 +1,6 @@
 package com.sublimeprev.api.service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -9,35 +10,37 @@ import org.springframework.stereotype.Service;
 
 import com.sublimeprev.api.config.i18n.Messages;
 import com.sublimeprev.api.config.i18n.ServiceException;
-import com.sublimeprev.api.model.AddressMother;
 import com.sublimeprev.api.model.Mother;
-import com.sublimeprev.api.repository.AddressMotherRepository;
+import com.sublimeprev.api.model.ProcessMother;
+import com.sublimeprev.api.repository.ProcessMotherRepository;
 
 @Service
-public class AddressMotherService {
+public class ProcessMotherService {
+
 	@Autowired
-	private AddressMotherRepository repository;
+	private ProcessMotherRepository repository;
 
 	@Autowired
 	private MotherService motherService;
 
-	public AddressMother save(AddressMother addresMother, Long idMother) {
-		if(addresMother.getId() == null) {
+	public ProcessMother save(ProcessMother processMother, Long idMother) {
+		if(processMother.getId() == null) {
 			Mother mother = this.motherService.findById(idMother);
-			addresMother.setMother(mother);
+			processMother.setMother(mother);
+			processMother.setDateStart(LocalDate.now());
 		}
-		return this.repository.save(addresMother);
+		return this.repository.save(processMother);
 	}
 
-	public AddressMother findById(Long idAddresMother) {
+	public ProcessMother findById(Long idAddresMother) {
 		return this.repository.findById(idAddresMother)
-				.orElseThrow(() -> new ServiceException("Endereço não encontrado."));
+				.orElseThrow(() -> new ServiceException("Mother not foud."));
 	}
 	
-	public AddressMother findByMother(Long idMother) {
+	public ProcessMother findByMother(Long idMother) {
 		Mother mother = this.motherService.findById(idMother);
 		
-		return this.repository.findByMother(mother).orElseThrow(() -> new ServiceException("AddressMother not foud"));
+		return this.repository.findByMother(mother).orElseThrow(() -> new ServiceException("Mother not foud"));
 	}
 
 	public void logicalExclusion(Long id) {
@@ -52,11 +55,11 @@ public class AddressMotherService {
 		this.repository.restoreDeleted(id);
 	}
 
-	public List<AddressMother> findAllDeleted() {
+	public List<ProcessMother> findAllDeleted() {
 		return this.repository.findAllDeleted();
 	}
 
-	public List<AddressMother> findByIds(Long[] ids) {
+	public List<ProcessMother> findByIds(Long[] ids) {
 		return this.repository.findAllById(Arrays.asList(ids));
 	}
 
@@ -68,7 +71,7 @@ public class AddressMotherService {
 
 	public boolean verifyAddresMother(Long idMother) {
 		Mother mother = this.motherService.findById(idMother);
-		Optional<AddressMother> optionalMother = this.repository.findByMother(mother);
+		Optional<ProcessMother> optionalMother = this.repository.findByMother(mother);
 
 		if (optionalMother.isPresent()) {
 			return true;
@@ -76,5 +79,4 @@ public class AddressMotherService {
 			return false;
 		}
 	}
-
 }

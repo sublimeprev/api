@@ -16,42 +16,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sublimeprev.api.dto.req.AddressMotherReqDTO;
-import com.sublimeprev.api.dto.res.AddressMotherResDTO;
-import com.sublimeprev.api.model.AddressMother;
-import com.sublimeprev.api.service.AddressMotherService;
+import com.sublimeprev.api.dto.req.ProcessMotherReqDTO;
+import com.sublimeprev.api.dto.res.ProcessMotherResDTO;
+import com.sublimeprev.api.model.ProcessMother;
+import com.sublimeprev.api.service.ProcessMotherService;
 
 @RestController
-@RequestMapping(value = "/api/address-mothers", produces = MediaType.APPLICATION_JSON_VALUE)
-public class AddressMotherController {
+@RequestMapping(value = "/api/process-mothers", produces = MediaType.APPLICATION_JSON_VALUE)
+public class ProcessMotherController {
 	
 	@Autowired
-	private AddressMotherService service;
-
+	private ProcessMotherService service;
+	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping
-	public AddressMotherResDTO store(@RequestBody AddressMotherReqDTO dto) {
-		AddressMother addressMother = this.service.save(dto.toEntity(new AddressMother()), dto.getIdMother());
-		return AddressMotherResDTO.of(addressMother);
+	public ProcessMotherResDTO store(@RequestBody ProcessMotherReqDTO dto) {
+		ProcessMother processMother = this.service.save(dto.toEntity(new ProcessMother()), dto.getIdMother());
+		return ProcessMotherResDTO.of(processMother);
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/{id}")
-	public AddressMotherResDTO show(@PathVariable("id") Long id) {
-		return AddressMotherResDTO.of(this.service.findById(id));
+	public ProcessMotherResDTO show(@PathVariable("id") Long id) {
+		return ProcessMotherResDTO.of(this.service.findById(id));
 	}
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/by-mother/{idMother}")
-	public AddressMotherResDTO findByMother(@PathVariable("idMother") Long id) {
-		return AddressMotherResDTO.of(this.service.findByMother(id));
+	public ProcessMotherResDTO findByMother(@PathVariable("idMother") Long id) {
+		return ProcessMotherResDTO.of(this.service.findByMother(id));
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PutMapping()
-	public AddressMotherResDTO update(@RequestBody AddressMotherReqDTO dto) {
-		AddressMother addressMother = dto.toEntity(this.service.findById(dto.getId()));
-		return AddressMotherResDTO.of(this.service.save(addressMother, null));
+	public ProcessMotherResDTO update(@RequestBody ProcessMotherReqDTO dto) {
+		ProcessMother processMother = dto.toEntity(this.service.findById(dto.getId()));
+		return ProcessMotherResDTO.of(this.service.save(processMother, null));
 	}
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -62,8 +62,8 @@ public class AddressMotherController {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/many")
-	public List<AddressMotherResDTO> showMany(@RequestParam Long[] ids) {
-		return this.service.findByIds(ids).stream().map(AddressMotherResDTO::of).collect(Collectors.toList());
+	public List<ProcessMotherResDTO> showMany(@RequestParam Long[] ids) {
+		return this.service.findByIds(ids).stream().map(ProcessMotherResDTO::of).collect(Collectors.toList());
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")

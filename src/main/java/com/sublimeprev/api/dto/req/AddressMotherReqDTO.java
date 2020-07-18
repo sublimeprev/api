@@ -23,19 +23,16 @@ public class AddressMotherReqDTO {
 	private String zipcode;
 	@NotNull
 	private Long idMother;
-	
-public AddressMother toEntity(AddressMotherReqDTO entity) {
-		AddressMother addressMother = AddressMother.builder()
-				.id(entity.getId())
-				.street(entity.getStreet())
-				.numberHouse(entity.getNumberHouse())
-				.neighborhood(entity.getNeighborhood())
-				.city(entity.getCity())
-				.state(entity.getState())
-				.complement(entity.getComplement())
-				.zipcode(entity.getZipcode())
-				.build();
-		
-		return addressMother;
+
+	public AddressMother toEntity(AddressMother entity) {
+		entity.setId(this.id);
+		entity.setStreet(this.street);
+		entity.setNumberHouse(this.numberHouse);
+		entity.setNeighborhood(this.neighborhood);
+		entity.setCity(this.city);
+		entity.setComplement(this.complement);
+		entity.setState(this.state);
+		entity.setZipcode(this.zipcode);
+		return entity;
 	}
 }

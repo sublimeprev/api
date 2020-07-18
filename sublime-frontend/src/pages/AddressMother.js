@@ -55,7 +55,7 @@ export default function AddressMother({...props}){
     
     const verifyAddress = () => {
         setLoading(true)
-        axios.get(`${URL.baseURL}/api/address-mothers/${idMother}`,{
+        axios.get(`${URL.baseURL}/api/address-mothers/by-mother/${idMother}`,{
               headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -66,6 +66,7 @@ export default function AddressMother({...props}){
               setLoading(false);
             }).catch(error => {
                 setHasAddress(false)
+                setLoading(false);
             });
         }
 
@@ -92,6 +93,7 @@ export default function AddressMother({...props}){
                 setLoading(false);
             }).catch(error => {
                 notify(error.message, 'warning');
+                setLoading(false);
             });
     }
 
@@ -111,6 +113,7 @@ export default function AddressMother({...props}){
                 setLoading(false);
             }).catch(error => {
                 notify(error.message, 'warning');
+                setLoading(false);
             });
     }
 
@@ -126,8 +129,8 @@ export default function AddressMother({...props}){
     const createAddress = () => {
         return (
             <>
-                <CardContent style={{ textAlign: 'center' }} >
-                    <form className={classes.root} noValidate autoComplete="off">
+                <CardContent style={{ textAlign: 'inherit', width: '100%' }} >
+                    <form style={{ textAlign: 'inherit', width: '100%' }} className={classes.root} noValidate autoComplete="off">
                         <TextField required name="state" label="Estado" variant="filled" value={address.state} onChange={handleChange}/>
                         <TextField required name="city" label="Cidade" variant="filled" value={address.city} onChange={handleChange}/>
                         <TextField required name="neighborhood" label="Bairro" variant="filled" value={address.neighborhood} onChange={handleChange}/>
@@ -151,7 +154,27 @@ export default function AddressMother({...props}){
             <>
                 <CardContent style={{ textAlign: 'center' }} >
                     <form className={classes.root} noValidate autoComplete="off">
-                    <TextField required name="state" label="Estado" variant="filled" value={address.state} onChange={handleChange}/>
+                        <TextField disabled name="id" label="Id" variant="filled" value={address.id}
+                        InputLabelProps={{
+                            shrink: true,
+                            }}/>
+                        <TextField disabled name="createdBy" label="Criado por" variant="filled" value={address.createdBy}
+                        InputLabelProps={{
+                            shrink: true,
+                            }}/>
+                        <TextField disabled name="updatedBy" label="Atualizado por" variant="filled" value={address.updatedBy}
+                        InputLabelProps={{
+                            shrink: true,
+                            }}/>
+                        <TextField disabled type="datetime" name="createdAt" label="Criado em" variant="filled" value={address.createdAt}
+                        InputLabelProps={{
+                            shrink: true,
+                            }}/>
+                        <TextField disabled type="datetime" name="updatedAt" label="Atualizado em" variant="filled" value={address.updatedAt}
+                        InputLabelProps={{
+                            shrink: true,
+                            }}/>
+                        <TextField required name="state" label="Estado" variant="filled" value={address.state} onChange={handleChange}/>
                         <TextField required name="city" label="Cidade" variant="filled" value={address.city} onChange={handleChange}/>
                         <TextField required name="neighborhood" label="Bairro" variant="filled" value={address.neighborhood} onChange={handleChange}/>
                         <TextField required name="street" label="Rua" variant="filled" value={address.street} onChange={handleChange}/>
@@ -171,7 +194,7 @@ export default function AddressMother({...props}){
 
     return(
         <>
-            {hasAddress?editAddress():createAddress()}
+            {loading?<Loading/>:hasAddress?editAddress():createAddress()}
             
         </>
     )

@@ -1,6 +1,5 @@
 package com.sublimeprev.api.service;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import com.sublimeprev.api.bases.PageReq;
 import com.sublimeprev.api.config.i18n.Messages;
 import com.sublimeprev.api.config.i18n.ServiceException;
 import com.sublimeprev.api.model.Mother;
-import com.sublimeprev.api.model.User;
 import com.sublimeprev.api.repository.MotherRepository;
 import com.sublimeprev.api.util.SearchUtils;
 
@@ -22,9 +20,6 @@ public class MotherService {
 
 	@Autowired
 	private MotherRepository repository;
-	
-	@Autowired
-	private UserService userService;
 	
 	public Page<Mother> findAll(PageReq query) {
 		Specification<Mother> deleted = SearchUtils.specByDeleted(query.isDeleted());
@@ -38,16 +33,12 @@ public class MotherService {
 	}
 	
 	public Mother save(Mother mother) {
-		if(this.repository.findByMother(mother.getCpf()).isPresent()) {
+		if(this.repository.findByMother(mother.getCpf()).isPresent() && mother.getId() == null) {
 			new ServiceException("Mãe já esta cadastrada.");
 		}
 		if(mother.getCpf().isEmpty() || mother.getCpf() == null) {
 			throw new ServiceException("Campo cpf deve estar preenchido corretamente.");
 		}
-		LocalDateTime today = LocalDateTime.now();
-		User userAuthenticated = userService.findAuthenticatedUser();
-		mother.setCreatedAt(today);
-		mother.setUpdatedBy(userAuthenticated.getName());
 		return this.repository.save(mother);
 	}
 	

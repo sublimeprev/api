@@ -23,6 +23,13 @@ const enums = {
     'MEDIO_COMPLETO',
     'SUPERIOR_INCOMPLETO',
     'SUPERIOR_COMPLETO'
+  ],
+
+  processStatus: [
+    'Ánalise',
+    'Concedido',
+    'Indeferido',
+    'Observação'
   ]
 };
 const enumsStyles = {

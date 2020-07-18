@@ -16,42 +16,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sublimeprev.api.dto.req.AddressMotherReqDTO;
-import com.sublimeprev.api.dto.res.AddressMotherResDTO;
-import com.sublimeprev.api.model.AddressMother;
-import com.sublimeprev.api.service.AddressMotherService;
+import com.sublimeprev.api.dto.req.ChildrenReqDTO;
+import com.sublimeprev.api.dto.res.ChildrenResDTO;
+import com.sublimeprev.api.model.Children;
+import com.sublimeprev.api.service.ChildrenService;
 
 @RestController
-@RequestMapping(value = "/api/address-mothers", produces = MediaType.APPLICATION_JSON_VALUE)
-public class AddressMotherController {
+@RequestMapping(value = "/api/children", produces = MediaType.APPLICATION_JSON_VALUE)
+public class ChildrenControler {
 	
 	@Autowired
-	private AddressMotherService service;
-
+	private ChildrenService service;
+	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping
-	public AddressMotherResDTO store(@RequestBody AddressMotherReqDTO dto) {
-		AddressMother addressMother = this.service.save(dto.toEntity(new AddressMother()), dto.getIdMother());
-		return AddressMotherResDTO.of(addressMother);
+	public ChildrenResDTO store(@RequestBody ChildrenReqDTO dto) {
+		Children children = this.service.save(dto.toEntity(new Children()), dto.getIdMother());
+		return ChildrenResDTO.of(children);
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/{id}")
-	public AddressMotherResDTO show(@PathVariable("id") Long id) {
-		return AddressMotherResDTO.of(this.service.findById(id));
+	public ChildrenResDTO show(@PathVariable("id") Long id) {
+		return ChildrenResDTO.of(this.service.findById(id));
 	}
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/by-mother/{idMother}")
-	public AddressMotherResDTO findByMother(@PathVariable("idMother") Long id) {
-		return AddressMotherResDTO.of(this.service.findByMother(id));
+	public ChildrenResDTO findByMother(@PathVariable("idMother") Long id) {
+		return ChildrenResDTO.of(this.service.findByMother(id));
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PutMapping()
-	public AddressMotherResDTO update(@RequestBody AddressMotherReqDTO dto) {
-		AddressMother addressMother = dto.toEntity(this.service.findById(dto.getId()));
-		return AddressMotherResDTO.of(this.service.save(addressMother, null));
+	public ChildrenResDTO update(@RequestBody ChildrenReqDTO dto) {
+		Children children = dto.toEntity(this.service.findById(dto.getId()));
+		return ChildrenResDTO.of(this.service.save(children, null));
 	}
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -62,8 +62,8 @@ public class AddressMotherController {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/many")
-	public List<AddressMotherResDTO> showMany(@RequestParam Long[] ids) {
-		return this.service.findByIds(ids).stream().map(AddressMotherResDTO::of).collect(Collectors.toList());
+	public List<ChildrenResDTO> showMany(@RequestParam Long[] ids) {
+		return this.service.findByIds(ids).stream().map(ChildrenResDTO::of).collect(Collectors.toList());
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -83,5 +83,4 @@ public class AddressMotherController {
 	public boolean verifyAddressMother(@PathVariable ("idMother") Long idMother) {
 		return this.service.verifyAddresMother(idMother);
 	}
-
 }

@@ -9,35 +9,36 @@ import org.springframework.stereotype.Service;
 
 import com.sublimeprev.api.config.i18n.Messages;
 import com.sublimeprev.api.config.i18n.ServiceException;
-import com.sublimeprev.api.model.AddressMother;
+import com.sublimeprev.api.model.Children;
 import com.sublimeprev.api.model.Mother;
-import com.sublimeprev.api.repository.AddressMotherRepository;
+import com.sublimeprev.api.repository.ChildrenRepository;
 
 @Service
-public class AddressMotherService {
+public class ChildrenService {
+	
 	@Autowired
-	private AddressMotherRepository repository;
-
+	private ChildrenRepository repository;
+	
 	@Autowired
 	private MotherService motherService;
-
-	public AddressMother save(AddressMother addresMother, Long idMother) {
-		if(addresMother.getId() == null) {
+	
+	public Children save(Children children, Long idMother) {
+		if(children.getId() == null) {
 			Mother mother = this.motherService.findById(idMother);
-			addresMother.setMother(mother);
+			children.setMother(mother);
 		}
-		return this.repository.save(addresMother);
+		return this.repository.save(children);
 	}
 
-	public AddressMother findById(Long idAddresMother) {
+	public Children findById(Long idAddresMother) {
 		return this.repository.findById(idAddresMother)
 				.orElseThrow(() -> new ServiceException("Endereço não encontrado."));
 	}
 	
-	public AddressMother findByMother(Long idMother) {
+	public Children findByMother(Long idMother) {
 		Mother mother = this.motherService.findById(idMother);
 		
-		return this.repository.findByMother(mother).orElseThrow(() -> new ServiceException("AddressMother not foud"));
+		return this.repository.findByMother(mother).orElseThrow(() -> new ServiceException("Children not foud"));
 	}
 
 	public void logicalExclusion(Long id) {
@@ -52,11 +53,11 @@ public class AddressMotherService {
 		this.repository.restoreDeleted(id);
 	}
 
-	public List<AddressMother> findAllDeleted() {
+	public List<Children> findAllDeleted() {
 		return this.repository.findAllDeleted();
 	}
 
-	public List<AddressMother> findByIds(Long[] ids) {
+	public List<Children> findByIds(Long[] ids) {
 		return this.repository.findAllById(Arrays.asList(ids));
 	}
 
@@ -68,7 +69,7 @@ public class AddressMotherService {
 
 	public boolean verifyAddresMother(Long idMother) {
 		Mother mother = this.motherService.findById(idMother);
-		Optional<AddressMother> optionalMother = this.repository.findByMother(mother);
+		Optional<Children> optionalMother = this.repository.findByMother(mother);
 
 		if (optionalMother.isPresent()) {
 			return true;

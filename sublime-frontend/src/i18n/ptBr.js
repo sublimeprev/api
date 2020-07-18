@@ -23,14 +23,21 @@ ptbrMessages.enums = {
     VIUVO: 'Viúva'
   },
 
-schooling: {
-  FUNDAMENTAL_INCOMPLETO: 'Fundamental Icompleto',
-  FUNDAMENTAL_COMPLETO: 'Fundamental Completo',
-  MEDIO_INCOMPLETO: 'Médio Incompleto',
-  MEDIO_COMPLETO: 'Médio Completo',
-  SUPERIOR_INCOMPLETO: 'Superior Incompleto',
-  SUPERIOR_COMPLETO: 'Superior Completo'
-}
+  schooling: {
+    FUNDAMENTAL_INCOMPLETO: 'Fundamental Icompleto',
+    FUNDAMENTAL_COMPLETO: 'Fundamental Completo',
+    MEDIO_INCOMPLETO: 'Médio Incompleto',
+    MEDIO_COMPLETO: 'Médio Completo',
+    SUPERIOR_INCOMPLETO: 'Superior Incompleto',
+    SUPERIOR_COMPLETO: 'Superior Completo'
+  },
+
+  processStatus: {
+    ANALISE: 'Ánalise',
+    CONCEDIDO: 'Concedido',
+    INDEFERIDO: 'Indeferido',
+    OBSERVACAO: 'Observação'
+  }
 };
 
 ptbrMessages.forms = {
@@ -84,26 +91,6 @@ ptbrMessages.resources = {
       schedulingsEndDate: 'Data Final para Agendamentos',
       listTypeExercise: 'Tipos de Treino',
       typeExercise: 'Tipos de Treino',
-      encryptedPassword: 'Senha',
-      comments: 'Observações',
-    },
-  },
-
-  users: {
-    empty: ptbrMessages.page.empty,
-    invite: ptbrMessages.page.invite,
-    name: 'Usuário |||| Usuários',
-    fields: {
-      updatedAt: 'Atualizado em',
-      updatedBy: 'Atualizado por',
-      username: 'Login',
-      name: 'Nome Completo',
-      password: 'Nova Senha',
-      email: 'E-mail',
-      roles: 'Permissões',
-      phone: 'Telefone',
-      city: 'Cidade',
-      birthdate: 'Data de Nascimento',
       encryptedPassword: 'Senha',
       comments: 'Observações',
     },
