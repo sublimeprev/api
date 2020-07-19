@@ -188,7 +188,7 @@ export default function ProcessMother({...props}){
                         InputLabelProps={{
                             shrink: true,
                             }}/>
-                        <FormControl className={classes.formControl}>
+                        <FormControl style={{marginTop: 16}}>
                             <InputLabel id="demo-simple-select-label">Status</InputLabel>
                             <Select
                             labelId="demo-simple-select-label"

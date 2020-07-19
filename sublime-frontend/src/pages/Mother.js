@@ -27,6 +27,7 @@ import RestoreButton from '../components/RestoreButton';
 import AddressMother from './AddressMother';
 import ChildrenMother from './ChildrenMother';
 import ProcessMother from './ProcessMother';
+import LastCompanyMother from './LastCompany';
 
 
 export const MotherList = props => (
@@ -191,7 +192,8 @@ const MotherTabs = props => {
           <Tab label="Geral" {...a11yProps(0)} />
           <Tab label="Endereço" {...a11yProps(1)} />
           <Tab label="Filho" {...a11yProps(2)} />
-          <Tab label="Processo" {...a11yProps(3)} />
+          <Tab label="Última Empresa" {...a11yProps(3)} />
+          <Tab label="Processo" {...a11yProps(4)} />
         </Tabs>
       </div>
       <TabPanel value={value} index={0}>
@@ -204,6 +206,9 @@ const MotherTabs = props => {
         <ChildrenMother {...props} />
       </TabPanel>
       <TabPanel value={value} index={3}>
+        <LastCompanyMother {...props} />
+      </TabPanel>
+      <TabPanel value={value} index={4}>
         <ProcessMother {...props} />
       </TabPanel>
     </div>
