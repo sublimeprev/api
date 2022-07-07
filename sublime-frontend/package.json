@@ -10,7 +10,7 @@
     "axios": "^0.19.2",
     "date-fns": "^2.9.0",
     "material-table": "^1.57.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "prop-types": "^15.7.2",
     "ra-language-portuguese": "^1.6.0",
     "react": "^16.12.0",
